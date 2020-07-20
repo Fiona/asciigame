@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Fiona\.Rider2019.2\config\consoles\db" t="IncludeRecursive" />
+    <e p="C:\Users\Fiona\.Rider2019.2\config\extensions" t="IncludeRecursive" />
+    <e p="C:\Users\Fiona\.Rider2019.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Fiona\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_asciigame.-1926774826.00" t="ExcludeRecursive" />
+    <e p="D:\devel\csharp\asciigame\asciigame" t="IncludeRecursive">
+      <e p=".gitignore" t="Include" />
+      <e p="AppConfig.json" t="Include" />
+      <e p="asciigame.csproj" t="IncludeRecursive" />
+      <e p="asciigame.csproj.DotSettings" t="Include" />
+      <e p="asciigame.sln" t="IncludeFlat" />
+      <e p="bin" t="ExcludeRecursive" />
+      <e p="Core" t="Include">
+        <e p="Canvas.cs" t="Include" />
+        <e p="CanvasTile.cs" t="Include" />
+        <e p="Exception.cs" t="Include" />
+        <e p="ExMath.cs" t="Include" />
+        <e p="GlyphPalette.cs" t="Include" />
+        <e p="PrimitiveDrawing.cs" t="Include" />
+        <e p="Window.cs" t="Include" />
+      </e>
+      <e p="Data" t="Include">
+        <e p="AppConfig.cs" t="Include" />
+        <e p="Data.cs" t="Include" />
+        <e p="JsonHandler.cs" t="Include" />
+      </e>
+      <e p="obj" t="ExcludeRecursive">
+        <e p="Debug" t="Include">
+          <e p="net452" t="Include">
+            <e p="asciigame.AssemblyInfo.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Program.cs" t="Include" />
+      <e p="Resources" t="Include">
+        <e p="Data" t="Include" />
+        <e p="DejaVuSansMono-Bold.ttf" t="Include" />
+        <e p="DejaVuSansMono.ttf" t="Include" />
+        <e p="KreativeSquare.ttf" t="Include" />
+      </e>
+      <e p="vault" t="Include">
+        <e p="KreativeSquareFont" t="Include">
+          <e p="Character Encodings - Fonts - Kreative Square.html" t="Include" />
+          <e p="Character Encodings - Fonts - Kreative Square_files" t="Include">
+            <e p="charlist.css" t="Include" />
+            <e p="charlist.js" t="Include" />
+            <e p="entitydb.js" t="Include" />
+            <e p="jquery.js" t="Include" />
+            <e p="kkok-small.png" t="Include" />
+            <e p="kreativesquare.eot" t="Include" />
+            <e p="KreativeSquare.ttf" t="Include" />
+            <e p="missdiode.png" t="Include" />
+            <e p="pua.js" t="Include" />
+            <e p="stylesheet.css" t="Include" />
+            <e p="ucd.js" t="Include" />
+            <e p="unicopy.css" t="Include" />
+            <e p="unicopy.js" t="Include" />
+          </e>
+        </e>
+      </e>
+    </e>
+  </component>
+</project>
