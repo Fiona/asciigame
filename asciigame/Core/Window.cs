@@ -1,6 +1,9 @@
 ﻿using System;
-using System.Drawing;
+using System.IO;
 using asciigame.Data;
+using asciigame.Game;
+using asciigame.UI;
+using asciigame.UI.Widgets;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -10,14 +13,18 @@ using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace asciigame.Core
 {
-    class Window : Game
+    class Window : Microsoft.Xna.Framework.Game
     {
         private static Window _instance;
         public static Window Instance => _instance;
 
-        private GraphicsDeviceManager graphics;
-        private SpriteBatch spriteBatch;
+        public SpriteFont debugFont;
+
         private Canvas canvas;
+        private GraphicsDeviceManager graphics;
+        private GameManager gameManager;
+        private UIManager uiManager;
+        private SpriteBatch spriteBatch;
         private AppConfig appConfig;
         private (int width, int height) currentWindowSize;
 
@@ -34,15 +41,16 @@ namespace asciigame.Core
                 SynchronizeWithVerticalRetrace = false
             };
 
-
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += Window_ClientSizeChanged;
+            IsMouseVisible = true;
         }
 
         private void Window_ClientSizeChanged(object sender, EventArgs e)
         {
             currentWindowSize = (Window.ClientBounds.Width, Window.ClientBounds.Height);
             canvas.Resize(currentWindowSize.width, currentWindowSize.height);
+            uiManager.Resize((canvas.canvasNumTilesHorizontal, canvas.canvasNumTilesVertical));
             RecreateDrawBuffer();
         }
 
@@ -50,6 +58,9 @@ namespace asciigame.Core
         {
             base.Initialize();
             canvas = new Canvas(currentWindowSize.width, currentWindowSize.height);
+            uiManager = new UIManager(new WidgetPanel(null));
+            gameManager = new GameManager(uiManager);
+            uiManager.Resize((canvas.canvasNumTilesHorizontal, canvas.canvasNumTilesVertical));
         }
 
         private RenderTarget2D drawBuffer;
@@ -58,6 +69,8 @@ namespace asciigame.Core
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             RecreateDrawBuffer();
+
+            debugFont = Content.Load<SpriteFont>(Path.Combine("Resources", "DejaVuSansMono"));
         }
 
         private void RecreateDrawBuffer()
@@ -76,35 +89,28 @@ namespace asciigame.Core
             drawBuffer?.Dispose();
         }
 
-        private double num;
-
-        private string lipsum =
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla a feugiat neque. Suspendisse fringilla nec orci gravida dignissim. Nunc maximus mauris blandit est tincidunt venenatis. Proin pretium, metus ut malesuada convallis, mauris justo iaculis enim, dignissim ultrices elit quam nec turpis. Vestibulum lobortis, est aliquet consequat semper, felis tellus aliquam tortor, id efficitur sem lectus vel mauris. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. ";
-
         protected override void Update(GameTime gameTime)
         {
+            var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             if(Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            var fps = 1000f / gameTime.ElapsedGameTime.TotalMilliseconds;
+            var fps = 1f / deltaTime;
+            /*
             canvas.WriteAt(
                 $"[ fps: {fps:F} ft: {gameTime.ElapsedGameTime.TotalMilliseconds:F}ms ]",
                 0, 0, Color.White
             );
-
-            var frameTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            num += 1f * frameTime * 50f;
-            canvas.WriteAt(
-                num >= lipsum.Length ? lipsum : lipsum.Substring(0, (int)num),
-                0, 3, Color.Lime
-            );
-
+*/
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
+            // Redraw UI
+            uiManager.Draw(canvas);
+
             // Draw canvas to off-screen buffer
             graphics.GraphicsDevice.SetRenderTarget(drawBuffer);
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);

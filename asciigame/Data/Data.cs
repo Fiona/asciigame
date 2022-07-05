@@ -42,5 +42,9 @@ namespace asciigame.Data
             _instance = new Lazy<T>(Get);
             return Instance;
         }
+
+        public virtual void Initialize()
+        {
+        }
     }
 }

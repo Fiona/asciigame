@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
@@ -67,6 +66,85 @@ namespace asciigame.Core
         }
     }
 
+    public class FourCharTupleConverter : JsonConverter
+    {
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            var tuple = ((char, char, char, char))value;
+            var jTuple = new JArray();
+            jTuple.Add(tuple.Item1);
+            jTuple.Add(tuple.Item2);
+            jTuple.Add(tuple.Item3);
+            jTuple.Add(tuple.Item4);
+            jTuple.WriteTo(writer);
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            JArray obj = (JArray) serializer.Deserialize(reader);
+            if(obj == null)
+                return ("", "", "", "");
+            return ((char) obj[0], (char) obj[1], (char) obj[2], (char) obj[3]);
+        }
+
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType == typeof((char, char, char, char));
+        }
+    }
+
+    public class TwoCharTupleConverter : JsonConverter
+    {
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            var tuple = ((char, char))value;
+            var jTuple = new JArray();
+            jTuple.Add(tuple.Item1);
+            jTuple.Add(tuple.Item2);
+            jTuple.WriteTo(writer);
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            JArray obj = (JArray) serializer.Deserialize(reader);
+            if(obj == null)
+                return ("", "");
+            return ((char) obj[0], (char) obj[1]);
+        }
+
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType == typeof((char, char));
+        }
+    }
+
+    public class FourIntTupleConverter : JsonConverter
+    {
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            var tuple = ((int, int, int, int))value;
+            var jTuple = new JArray();
+            jTuple.Add(tuple.Item1);
+            jTuple.Add(tuple.Item2);
+            jTuple.Add(tuple.Item3);
+            jTuple.Add(tuple.Item4);
+            jTuple.WriteTo(writer);
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            JArray obj = (JArray) serializer.Deserialize(reader);
+            if(obj == null)
+                return ("", "", "", "");
+            return ((int) obj[0], (int) obj[1], (int) obj[2], (int) obj[3]);
+        }
+
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType == typeof((int, int, int, int));
+        }
+    }
+
     public static class JsonHandler
     {
         public static T Deserialize<T>(string jsonContents)
@@ -111,6 +189,9 @@ namespace asciigame.Core
             };
             serializerSettings.Converters.Add(new XNAColorConverter());
             serializerSettings.Converters.Add(new Vector3Converter());
+            serializerSettings.Converters.Add(new TwoCharTupleConverter());
+            serializerSettings.Converters.Add(new FourCharTupleConverter());
+            serializerSettings.Converters.Add(new FourIntTupleConverter());
             return serializerSettings;
         }
     }
