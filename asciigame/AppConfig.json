@@ -1,9 +1,0 @@
-{
-  "windowSize": [1280, 720],
-  "windowClearColour": [0, 0, 0, 255],
-  "glyphPaletteSize": 32,
-  "canvasTileSize": 14,
-  "canvasClearColour": [25,25,25,255],
-  "resourcesDirectory": "Resources",
-  "fallbackFontFile": "KreativeSquare.ttf"
-}
